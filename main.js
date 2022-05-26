@@ -1,41 +1,74 @@
 class ContaBancaria {
-  constructor (agencia, numero, tipo, saldo) {
+  constructor (agencia, numero, tipo) {
     this.agencia =agencia;
     this.numero = numero;
     this.tipo = tipo
-    this.saldo= saldo;
+    this._saldo= 0;
   }
 
 
   get saldo() {
-    return this.saldo;
+    return this._saldo;
   }
 
-  set saldo(val) {
-    this.saldo = val.toUpperCase();
+  set saldo(valor) {
+    this._saldo = valor;
   }
 
-  sacar() {
-
+  sacar(valor) {/*recebe um valor para ser sacado */ 
+    if (valor >this._saldo) {
+      return 'Operação invalida';
+    }
+    this._saldo = this._saldo - valor;
+    return this._saldo;
   }
   
   
   
-  depositar() {
-
+  depositar(valor) {
+    this._saldo = this._saldo + valor;
+    return this._saldo;
   }
 }
 
 class ContaCorrente extends ContaBancaria {
-  constructor(cartaoCredito) {
-    this.cartaoCredito= cartaoCredito;
-  }
+  constructor (agencia, numero,  cartaoCredito) {
 
+    super(agencia, numero, saldo);
+    this.tipo = 'corrente';
+    this._cartaoCredito = cartaoCredito;
+
+  }
   get cartaoCredito() {
-    return this.cartaoCredito;
+    return this._cartaoCredito;
   }
 
-  set cartaoCredito(val) {
-    this.cartaoCredito = val.toUpperCase;
+  set cartaoCredito(valor) {
+    this._cartaoCredito = valor;
   }
 }
+
+
+class ContaPoupanca extends ContaBancaria() {
+  constructor (agencia, numero, ) {
+    super(agencia, numero, saldo);
+    this.tipo = 'poupança';
+  }
+}
+
+class ContaUniversitaria extends ContaBancaria() {
+  constructor (agencia, numero) {
+    super(agencia, numero, saldo);
+    this.tipo = 'universitaria';
+  }
+
+  sacar (valor) {
+    if (valor > 500) {
+      return 'Operação negada';
+    }
+
+    this._saldo= this._saldo- valor;
+  }
+
+}
+
